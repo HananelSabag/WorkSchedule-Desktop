@@ -1,13 +1,15 @@
 ; ============================================================
 ;  סידור עבודה - Inno Setup Installer Script
-;  Author : Hananel Sabag
-;  Version: 1.0.0
+;  Author    : Hananel Sabag
+;  Copyright : (c) 2025 Hananel Sabag. All Rights Reserved.
+;  Version   : 1.0.0
 ; ============================================================
 
 #define AppName      "Work Schedule"
 #define AppNameHe    "סידור עבודה"
 #define AppVersion   "1.0.0"
 #define AppPublisher "Hananel Sabag"
+#define AppCopyright "Copyright (c) 2025 Hananel Sabag. All Rights Reserved."
 #define AppExe       "WorkSchedule.exe"
 #define AppIcon      "..\WorkSchedule\logo.ico"
 #define PublishDir   "..\publish\win-x64"
@@ -18,14 +20,18 @@ AppName={#AppNameHe}
 AppVersion={#AppVersion}
 AppVerName={#AppNameHe} {#AppVersion}
 AppPublisher={#AppPublisher}
-AppPublisherURL=https://github.com/hananel12345
-AppSupportURL=https://github.com/hananel12345
+AppCopyright={#AppCopyright}
+AppPublisherURL=https://github.com/HananelSabag
+AppSupportURL=https://github.com/HananelSabag
+AppContact=hananel12345@gmail.com
 VersionInfoVersion={#AppVersion}
 VersionInfoCompany={#AppPublisher}
-VersionInfoDescription={#AppNameHe}
+VersionInfoDescription={#AppNameHe} - ניהול סידור עבודה שבועי
+VersionInfoCopyright={#AppCopyright}
 DefaultDirName={autopf}\{#AppName}
 DefaultGroupName={#AppNameHe}
 DisableProgramGroupPage=yes
+LicenseFile=LICENSE.txt
 OutputDir=Output
 OutputBaseFilename=WorkSchedule-Setup-{#AppVersion}
 SetupIconFile={#AppIcon}

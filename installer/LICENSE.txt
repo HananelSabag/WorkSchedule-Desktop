@@ -1,0 +1,36 @@
+WorkSchedule Desktop — End User License Agreement
+==================================================
+Copyright (c) 2025 Hananel Sabag. All Rights Reserved.
+
+This software ("WorkSchedule Desktop") is the exclusive intellectual property
+of Hananel Sabag.
+
+BY INSTALLING OR USING THIS SOFTWARE, YOU AGREE TO THE FOLLOWING TERMS:
+
+1. GRANT OF USE
+   You are granted a personal, non-exclusive, non-transferable license to
+   install and use this software on your own computer(s) for personal or
+   internal business purposes.
+
+2. RESTRICTIONS
+   You may NOT:
+   - Copy, reproduce, or redistribute this software or its source code
+   - Modify, adapt, translate, or create derivative works
+   - Sell, sublicense, rent, lease, or commercially exploit this software
+   - Reverse-engineer or decompile the software
+
+3. INTELLECTUAL PROPERTY
+   All rights, title, and interest in and to the software remain exclusively
+   with Hananel Sabag. No ownership rights are transferred by this license.
+
+4. DISCLAIMER
+   This software is provided "as is" without warranty of any kind.
+   Hananel Sabag shall not be liable for any damages arising from its use.
+
+5. CONTACT
+   For permissions, licensing inquiries, or questions:
+   hananel12345@gmail.com
+
+---
+Hananel Sabag — Software Engineering Graduate
+Built with love in Israel (c) 2025
