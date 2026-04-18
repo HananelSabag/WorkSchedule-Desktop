@@ -1,0 +1,213 @@
+<Page x:Class="WorkSchedule.Views.Pages.BlockingPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      Background="{StaticResource BackgroundBrush}"
+      FlowDirection="RightToLeft">
+
+    <Page.Resources>
+        <!-- Employee chip style for the bottom ListBox -->
+        <Style x:Key="EmployeeChipStyle" TargetType="ListBoxItem">
+            <Setter Property="Padding" Value="16,8"/>
+            <Setter Property="Margin" Value="0,0,8,0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border x:Name="Bd" CornerRadius="20" BorderThickness="1.5"
+                                Padding="{TemplateBinding Padding}"
+                                BorderBrush="#E2E8F0" Background="White">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock x:Name="Txt"
+                                           Text="{Binding Employee.Name}"
+                                           FontSize="13" FontFamily="Segoe UI"
+                                           Foreground="#1E293B" VerticalAlignment="Center"/>
+                                <Border x:Name="BadgeDot" Width="8" Height="8" CornerRadius="4"
+                                        Margin="6,0,0,0" VerticalAlignment="Center"
+                                        Visibility="Collapsed"/>
+                            </StackPanel>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#3B82F6"/>
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="#3B82F6"/>
+                                <Setter TargetName="Txt" Property="Foreground" Value="White"/>
+                                <Setter TargetName="Txt" Property="FontWeight" Value="SemiBold"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#EFF6FF"/>
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="#3B82F6"/>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                    <Condition Property="IsSelected" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Bd" Property="Background" Value="#2563EB"/>
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>   <!-- Header -->
+            <RowDefinition Height="Auto"/>   <!-- Mode + selected employee bar -->
+            <RowDefinition Height="*"/>      <!-- Blocking grid -->
+            <RowDefinition Height="Auto"/>   <!-- Employee chips -->
+        </Grid.RowDefinitions>
+
+        <!-- ── Header ── -->
+        <Border Grid.Row="0" Background="{StaticResource SurfaceBrush}"
+                BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,1" Padding="24,16">
+            <Grid FlowDirection="LeftToRight">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <Button x:Name="ManualBtn" Click="Manual_Click"
+                            Style="{StaticResource MaterialDesignRaisedButton}"
+                            Padding="18,10" FontSize="13" FontWeight="SemiBold" Margin="0,0,8,0">
+                        <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
+                            <materialDesign:PackIcon Kind="AccountEdit" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                            <TextBlock Text="שיבוץ ידני" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="AutoBtn" Click="Auto_Click"
+                            Style="{StaticResource MaterialDesignOutlinedButton}"
+                            Padding="18,10" FontSize="13">
+                        <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
+                            <materialDesign:PackIcon Kind="Robot" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                            <TextBlock Text="שיבוץ אוטומטי" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+                <StackPanel Grid.Column="1" FlowDirection="RightToLeft"
+                            VerticalAlignment="Center" Margin="20,0,0,0">
+                    <TextBlock Text="חסימות" FontSize="20" FontWeight="Bold"
+                               Foreground="{StaticResource TextPrimaryBrush}"/>
+                    <TextBlock Text="סמן עבור כל עובד מתי הוא לא יכול (או יכול רק) לעבוד"
+                               FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,3,0,0"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- ── Mode bar + selected employee ── -->
+        <Border Grid.Row="1" Background="{StaticResource SurfaceBrush}"
+                BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,1" Padding="20,12">
+            <Grid>
+                <!-- Right: selected employee indicator -->
+                <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <TextBlock x:Name="NoEmpHint" Text="← בחר עובד מהחיפים"
+                               FontSize="13" Foreground="{StaticResource TextSecondaryBrush}"
+                               VerticalAlignment="Center"/>
+                    <Border x:Name="SelectedEmpBadge" Visibility="Collapsed"
+                            Background="#EFF6FF" BorderBrush="#3B82F6" BorderThickness="1.5"
+                            CornerRadius="22" Padding="10,5,14,5">
+                        <StackPanel Orientation="Horizontal">
+                            <Border Width="26" Height="26" CornerRadius="13" Background="#3B82F6"
+                                    VerticalAlignment="Center" Margin="0,0,8,0">
+                                <TextBlock x:Name="SelectedEmpInitial" Text=""
+                                           Foreground="White" FontWeight="Bold" FontSize="12"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock x:Name="SelectedEmployeeLabel" Text=""
+                                       FontSize="14" FontWeight="SemiBold" Foreground="#1E293B"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <!-- Left: mode chips + clear button (RTL order: לא יכול → יכול רק → נקה הכל) -->
+                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Center">
+
+                    <!-- Cannot mode chip (rightmost = first in RTL reading) -->
+                    <Border x:Name="CannotChip"
+                            CornerRadius="20" BorderThickness="2" Padding="20,9"
+                            BorderBrush="#DC2626" Background="#DC2626"
+                            Cursor="Hand" Margin="0,0,8,0">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon x:Name="CannotIcon" Kind="Cancel"
+                                                     Width="16" Height="16" Foreground="White"
+                                                     VerticalAlignment="Center" Margin="0,0,6,0"/>
+                            <TextBlock x:Name="CannotText" Text="לא יכול"
+                                       FontSize="14" FontWeight="SemiBold"
+                                       Foreground="White" VerticalAlignment="Center"
+                                       FontFamily="Segoe UI"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- CanOnly mode chip -->
+                    <Border x:Name="CanOnlyChip"
+                            CornerRadius="20" BorderThickness="2" Padding="20,9"
+                            BorderBrush="#BFDBFE" Background="White"
+                            Cursor="Hand" Margin="0,0,16,0">
+                        <Border.InputBindings>
+                            <MouseBinding MouseAction="LeftClick" Command="{x:Null}"/>
+                        </Border.InputBindings>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon x:Name="CanOnlyIcon" Kind="CheckCircleOutline"
+                                                     Width="16" Height="16" Foreground="#1D4ED8"
+                                                     VerticalAlignment="Center" Margin="0,0,6,0"/>
+                            <TextBlock x:Name="CanOnlyText" Text="יכול רק"
+                                       FontSize="14" FontWeight="SemiBold"
+                                       Foreground="#1D4ED8" VerticalAlignment="Center"
+                                       FontFamily="Segoe UI"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Clear button (leftmost = last in RTL reading) -->
+                    <Button x:Name="ClearBlocksBtn" Click="ClearBlocks_Click"
+                            Visibility="Collapsed"
+                            Padding="14,7" FontSize="12"
+                            Style="{StaticResource MaterialDesignOutlinedButton}"
+                            Foreground="{StaticResource DangerBrush}"
+                            BorderBrush="{StaticResource DangerBrush}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="TrashCanOutline" Width="14" Height="14"
+                                                     VerticalAlignment="Center" Margin="0,0,4,0"/>
+                            <TextBlock Text="נקה הכל" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- ── Blocking grid ── -->
+        <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto">
+            <ContentPresenter x:Name="BlockingGridHost" Margin="24,20"/>
+        </ScrollViewer>
+
+        <!-- ── Employee chips (bottom) ── -->
+        <Border Grid.Row="3" Background="{StaticResource SurfaceBrush}"
+                BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,1,0,0" Padding="20,14">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="עובדים:" FontSize="12" FontWeight="SemiBold"
+                           Foreground="{StaticResource TextSecondaryBrush}"
+                           VerticalAlignment="Center" Margin="0,0,14,0"/>
+                <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Disabled">
+                    <ListBox x:Name="EmployeeChips"
+                             BorderThickness="0" Background="Transparent"
+                             SelectionChanged="EmployeeChip_SelectionChanged"
+                             ItemContainerStyle="{StaticResource EmployeeChipStyle}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                    </ListBox>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>

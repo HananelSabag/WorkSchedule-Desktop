@@ -1,0 +1,85 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+
+    <!-- ===== COLOR PALETTE ===== -->
+    <!-- Light modern palette — calm blue accent, off-white background, dark-slate text -->
+
+    <Color x:Key="PrimaryColor">#3B82F6</Color>       <!-- Calm blue — main actions -->
+    <Color x:Key="PrimaryDarkColor">#2563EB</Color>   <!-- Darker blue — hover/pressed -->
+    <Color x:Key="SecondaryColor">#10B981</Color>     <!-- Teal green — stats, success -->
+    <Color x:Key="DangerColor">#EF4444</Color>        <!-- Red — blocks, delete -->
+    <Color x:Key="WarningColor">#F59E0B</Color>       <!-- Amber — Can-Only blocks -->
+    <Color x:Key="BackgroundColor">#F8FAFC</Color>    <!-- Near-white app background -->
+    <Color x:Key="SurfaceColor">#FFFFFF</Color>       <!-- Cards, panels -->
+    <Color x:Key="SidebarColor">#FFFFFF</Color>       <!-- Sidebar background -->
+    <Color x:Key="TextPrimaryColor">#1E293B</Color>   <!-- Near-black main text -->
+    <Color x:Key="TextSecondaryColor">#64748B</Color> <!-- Muted labels -->
+    <Color x:Key="BorderColor">#E2E8F0</Color>        <!-- Dividers, borders -->
+    <Color x:Key="HoverColor">#EFF6FF</Color>         <!-- Blue-tinted hover state -->
+
+    <!-- Brushes derived from colors -->
+    <SolidColorBrush x:Key="PrimaryBrush"          Color="{StaticResource PrimaryColor}"/>
+    <SolidColorBrush x:Key="PrimaryDarkBrush"      Color="{StaticResource PrimaryDarkColor}"/>
+    <SolidColorBrush x:Key="SecondaryBrush"        Color="{StaticResource SecondaryColor}"/>
+    <SolidColorBrush x:Key="DangerBrush"           Color="{StaticResource DangerColor}"/>
+    <SolidColorBrush x:Key="WarningBrush"          Color="{StaticResource WarningColor}"/>
+    <SolidColorBrush x:Key="BackgroundBrush"       Color="{StaticResource BackgroundColor}"/>
+    <SolidColorBrush x:Key="SurfaceBrush"          Color="{StaticResource SurfaceColor}"/>
+    <SolidColorBrush x:Key="SidebarBrush"          Color="{StaticResource SidebarColor}"/>
+    <SolidColorBrush x:Key="TextPrimaryBrush"      Color="{StaticResource TextPrimaryColor}"/>
+    <SolidColorBrush x:Key="TextSecondaryBrush"    Color="{StaticResource TextSecondaryColor}"/>
+    <SolidColorBrush x:Key="BorderBrush"           Color="{StaticResource BorderColor}"/>
+    <SolidColorBrush x:Key="HoverBrush"            Color="{StaticResource HoverColor}"/>
+
+    <!-- ===== TYPOGRAPHY ===== -->
+    <FontFamily x:Key="AppFont">Segoe UI</FontFamily>
+    <FontFamily x:Key="AppFontHebrew">Segoe UI, Arial</FontFamily>
+
+    <system:Double xmlns:system="clr-namespace:System;assembly=mscorlib" x:Key="FontSizeSmall">12</system:Double>
+    <system:Double xmlns:system="clr-namespace:System;assembly=mscorlib" x:Key="FontSizeBody">14</system:Double>
+    <system:Double xmlns:system="clr-namespace:System;assembly=mscorlib" x:Key="FontSizeSubtitle">16</system:Double>
+    <system:Double xmlns:system="clr-namespace:System;assembly=mscorlib" x:Key="FontSizeTitle">20</system:Double>
+    <system:Double xmlns:system="clr-namespace:System;assembly=mscorlib" x:Key="FontSizeHeadline">24</system:Double>
+
+    <!-- ===== SIDEBAR NAV ITEM STYLE ===== -->
+    <Style x:Key="NavItemStyle" TargetType="Button">
+        <Setter Property="Background"         Value="Transparent"/>
+        <Setter Property="BorderThickness"    Value="0"/>
+        <Setter Property="Foreground"         Value="{StaticResource TextSecondaryBrush}"/>
+        <Setter Property="FontFamily"         Value="{StaticResource AppFont}"/>
+        <Setter Property="FontSize"           Value="{StaticResource FontSizeBody}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="Padding"            Value="16,12"/>
+        <Setter Property="Cursor"             Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="8"
+                            Margin="8,2">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="Center"
+                                          Margin="{TemplateBinding Padding}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource HoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource PrimaryBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Active nav item (selected page) -->
+    <Style x:Key="NavItemActiveStyle" TargetType="Button" BasedOn="{StaticResource NavItemStyle}">
+        <Setter Property="Background"  Value="{StaticResource HoverBrush}"/>
+        <Setter Property="Foreground"  Value="{StaticResource PrimaryBrush}"/>
+        <Setter Property="FontWeight"  Value="SemiBold"/>
+    </Style>
+
+</ResourceDictionary>

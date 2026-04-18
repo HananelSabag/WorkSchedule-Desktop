@@ -1,0 +1,182 @@
+<Window x:Class="WorkSchedule.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="סידור עבודה"
+        Icon="/logo.ico"
+        MinWidth="1024" MinHeight="680"
+        Width="1280"   Height="760"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BackgroundBrush}"
+        FontFamily="{StaticResource AppFont}"
+        TextOptions.TextFormattingMode="Display"
+        FlowDirection="RightToLeft"
+        Closing="Window_Closing">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- ═══════════════════ SIDEBAR ═══════════════════ -->
+        <Border Grid.Column="0"
+                Background="{StaticResource SidebarBrush}"
+                BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="0,0,1,0">
+            <DockPanel>
+
+                <!-- Logo + App title -->
+                <Border DockPanel.Dock="Top"
+                        Padding="16,20,16,16"
+                        BorderBrush="{StaticResource BorderBrush}"
+                        BorderThickness="0,0,0,1">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Image Source="/Resources/logo.png"
+                               Width="36" Height="36"
+                               RenderOptions.BitmapScalingMode="HighQuality"
+                               Margin="0,0,10,0"/>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="סידור עבודה"
+                                       FontSize="{StaticResource FontSizeSubtitle}"
+                                       FontWeight="Bold"
+                                       Foreground="{StaticResource PrimaryBrush}"/>
+                            <TextBlock x:Name="ActiveTemplateName"
+                                       Text="טוען..."
+                                       FontSize="11"
+                                       Foreground="{StaticResource TextSecondaryBrush}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Draft resume banner -->
+                <Border x:Name="DraftBanner"
+                        DockPanel.Dock="Top"
+                        Visibility="Collapsed"
+                        Background="#FFF7ED"
+                        BorderBrush="#FED7AA"
+                        BorderThickness="0,0,0,1"
+                        Padding="12,10">
+                    <DockPanel LastChildFill="True">
+                        <materialDesign:PackIcon Kind="ContentSaveOutline"
+                                                 DockPanel.Dock="Left"
+                                                 Foreground="#F97316"
+                                                 VerticalAlignment="Center"
+                                                 Margin="0,0,8,0"/>
+                        <StackPanel>
+                            <TextBlock Text="יש טיוטה שמורה"
+                                       FontSize="12"
+                                       FontWeight="SemiBold"
+                                       Foreground="#EA580C"/>
+                            <Button Content="המשך טיוטה ←"
+                                    Style="{StaticResource MaterialDesignFlatButton}"
+                                    Foreground="#F97316"
+                                    Padding="0" Height="22"
+                                    FontSize="11"
+                                    HorizontalAlignment="Left"
+                                    Click="ContinueDraft_Click"/>
+                        </StackPanel>
+                    </DockPanel>
+                </Border>
+
+                <!-- ── Nav items ── -->
+                <StackPanel DockPanel.Dock="Top" Margin="0,8,0,0">
+
+                    <Button x:Name="NavHome" Style="{StaticResource NavItemActiveStyle}" Click="NavHome_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Home" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <TextBlock Text="דף הבית" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="NavEmployees" Style="{StaticResource NavItemStyle}" Click="NavEmployees_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="AccountGroup" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <TextBlock Text="עובדים" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="NavTemplate" Style="{StaticResource NavItemStyle}" Click="NavTemplate_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="TableEdit" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <TextBlock Text="מבנה טבלה" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="NavHistory" Style="{StaticResource NavItemStyle}" Click="NavHistory_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="History" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <TextBlock Text="היסטוריה" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="NavSettings" Style="{StaticResource NavItemStyle}" Click="NavSettings_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Cog" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <TextBlock Text="הגדרות" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+
+                </StackPanel>
+
+                <!-- Version + author at bottom -->
+                <StackPanel DockPanel.Dock="Bottom" Margin="16,0,16,14">
+                    <TextBlock Text="חננאל סבג"
+                               FontSize="11"
+                               Foreground="{StaticResource TextSecondaryBrush}"/>
+                    <TextBlock Text="v1.0.0"
+                               FontSize="11"
+                               Foreground="{StaticResource BorderBrush}"/>
+                </StackPanel>
+
+            </DockPanel>
+        </Border>
+
+        <!-- ═══════════════════ CONTENT AREA ═══════════════════ -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <!-- Flow breadcrumb bar — hidden when on top-level pages -->
+                <RowDefinition Height="Auto"/>
+                <!-- Page content -->
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Breadcrumb / flow top bar -->
+            <Border x:Name="FlowBar"
+                    Grid.Row="0"
+                    Visibility="Collapsed"
+                    Background="{StaticResource SurfaceBrush}"
+                    BorderBrush="{StaticResource BorderBrush}"
+                    BorderThickness="0,0,0,1"
+                    Padding="20,10">
+                <DockPanel>
+                    <Button DockPanel.Dock="Right"
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                            Foreground="{StaticResource TextSecondaryBrush}"
+                            Click="FlowBack_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="ArrowRight" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                            <TextBlock Text="חזרה" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock x:Name="FlowStep1" Text="" FontSize="13"
+                                   Foreground="{StaticResource TextSecondaryBrush}"/>
+                        <materialDesign:PackIcon Kind="ChevronLeft" Margin="6,0"
+                                                 Foreground="{StaticResource BorderBrush}"
+                                                 VerticalAlignment="Center"/>
+                        <TextBlock x:Name="FlowStep2" Text="" FontSize="13" FontWeight="SemiBold"
+                                   Foreground="{StaticResource PrimaryBrush}"/>
+                    </StackPanel>
+                </DockPanel>
+            </Border>
+
+            <!-- Page frame -->
+            <Frame x:Name="ContentFrame"
+                   Grid.Row="1"
+                   NavigationUIVisibility="Hidden"
+                   Background="{StaticResource BackgroundBrush}"/>
+        </Grid>
+
+    </Grid>
+</Window>
