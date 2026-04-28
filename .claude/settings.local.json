@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dotnet build *)",
+      "Bash(xargs wc *)",
+      "Bash(git -C \"C:/CodingProjects/WorkSchedule-Desktop\" log --oneline -5)",
+      "Bash(git -C \"C:/CodingProjects/WorkSchedule-Desktop\" status --short)",
+      "Bash(winget install *)",
+      "Bash(publish.bat)",
+      "Bash(cmd.exe /c publish.bat)",
+      "Bash(dotnet publish *)",
+      "Bash(\"C:/Program Files \\(x86\\)/Inno Setup 6/ISCC.exe\" \"C:/CodingProjects/WorkSchedule-Desktop/installer/setup.iss\")",
+      "Read(//c/Program Files \\(x86\\)/**)",
+      "Read(//c/Program Files \\(x86\\)//**)",
+      "Bash(cmd.exe /c \"dir /b \\\\\"C:\\\\Program Files \\(x86\\)\\\\\"\")",
+      "Bash(cmd.exe /c \"where ISCC.exe 2>nul & dir /s /b \\\\\"C:\\\\Program Files*\\\\ISCC.exe\\\\\" 2>nul\")",
+      "Bash(cmd.exe /c \"dir /s /b \\\\\"C:\\\\Program Files \\(x86\\)\\\\ISCC.exe\\\\\" 2>&1 & dir /s /b \\\\\"C:\\\\Program Files\\\\ISCC.exe\\\\\" 2>&1\")",
+      "Bash(cmd.exe /c \"reg query HKLM\\\\SOFTWARE\\\\WOW6432Node\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Uninstall /s /f \\\\\"Inno Setup\\\\\" 2>&1\")",
+      "Bash(cmd.exe /c \"dir /s /b C:\\\\ISCC.exe 2>nul & dir /s /b \\\\\"%LOCALAPPDATA%\\\\Programs\\\\Inno Setup 6\\\\ISCC.exe\\\\\" 2>nul & dir /s /b \\\\\"%USERPROFILE%\\\\AppData\\\\Local\\\\Programs\\\\Inno*\\\\\" 2>nul\")",
+      "Bash(cmd.exe /c \"powershell -Command \\\\\"Get-ChildItem -Path 'C:\\\\\\\\Program Files \\(x86\\)' -ErrorAction SilentlyContinue | Select-Object Name\\\\\"\")",
+      "Bash(cmd.exe /c 'powershell -Command \"& { $r = Get-ItemProperty '\\\\''HKLM:\\\\SOFTWARE\\\\WOW6432Node\\\\Inno Setup*'\\\\'' -ErrorAction SilentlyContinue; if\\($r\\) { $r } else { '\\\\''Not found in registry'\\\\'' } }\"')",
+      "Bash(cmd.exe /c \"powershell -Command \\\\\"Test-Path 'C:\\\\\\\\Program Files \\(x86\\)\\\\\\\\Inno Setup 6\\\\\\\\ISCC.exe'\\\\\"\")",
+      "Bash(cmd.exe /c \"dir /s /b \\\\\"C:\\\\\\\\\\\\\" 2>nul | findstr /i ISCC.exe\")",
+      "Read(//c/Users/hanan/AppData/Local/Programs//**)",
+      "Read(//c/Users/hanan/AppData/Local/Programs/Inno Setup 6//**)",
+      "Bash(\"/c/Users/hanan/AppData/Local/Programs/Inno Setup 6/ISCC.exe\" \"C:/CodingProjects/WorkSchedule-Desktop/installer/setup.iss\")",
+      "Bash(grep -E \"\\\\.\\(json|config|ts|js\\)$\")"
+    ]
+  }
+}
