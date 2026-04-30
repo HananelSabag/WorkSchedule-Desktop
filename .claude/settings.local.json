@@ -24,7 +24,9 @@
       "Read(//c/Users/hanan/AppData/Local/Programs//**)",
       "Read(//c/Users/hanan/AppData/Local/Programs/Inno Setup 6//**)",
       "Bash(\"/c/Users/hanan/AppData/Local/Programs/Inno Setup 6/ISCC.exe\" \"C:/CodingProjects/WorkSchedule-Desktop/installer/setup.iss\")",
-      "Bash(grep -E \"\\\\.\\(json|config|ts|js\\)$\")"
+      "Bash(grep -E \"\\\\.\\(json|config|ts|js\\)$\")",
+      "PowerShell($cert = New-SelfSignedCertificate -Type CodeSigning -Subject \"CN=Hananel Sabag, O=Hananel Sabag, C=IL\" -CertStoreLocation \"Cert:\\\\CurrentUser\\\\My\" -KeyUsage DigitalSignature -NotAfter \\(Get-Date\\).AddYears\\(5\\); Write-Host \"Thumbprint: $\\($cert.Thumbprint\\)\")",
+      "PowerShell(Start-Process \"windowsdefender://SmartAppControl\")"
     ]
   }
 }
