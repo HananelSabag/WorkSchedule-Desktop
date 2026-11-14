@@ -4,6 +4,8 @@ A modern, full-featured **Windows desktop application** for intelligent work shi
 
 > **Desktop port of the original Android app** — same powerful engine, redesigned for Windows with a native Material Design UI.
 
+![WorkSchedule Desktop — home screen](DEMO_ScreenShot.png)
+
 ---
 
 ## 👨‍💻 About the Developer
@@ -111,7 +113,7 @@ I built this application from scratch as a full-stack desktop project, demonstra
 ## 🚀 Installation
 
 ### Option A — Installer (Recommended)
-1. Download **`WorkSchedule-Setup-1.0.0.exe`** from the repository root
+1. Download **`WorkSchedule-Setup-1.0.0.exe`** from [GitHub Releases](https://github.com/HananelSabag/WorkSchedule-Desktop/releases/latest)
 2. Run the installer (no admin required)
 3. Follow the setup wizard
 4. Launch from Desktop shortcut or Start Menu

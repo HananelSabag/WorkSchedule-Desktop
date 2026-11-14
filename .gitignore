@@ -64,3 +64,7 @@ $RECYCLE.BIN/
 *.db
 *.db-shm
 *.db-wal
+
+# Local-only: AI-agent notes, IDE settings and build outputs
+.claude/
+WorkSchedule-Setup-*.exe
